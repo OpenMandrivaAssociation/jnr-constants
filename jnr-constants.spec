@@ -1,6 +1,6 @@
 Name:           jnr-constants
 Version:        0.7
-Release:        3
+Release:        5
 Summary:        Java Native Runtime constants 
 Group:          Development/Java
 License:        MIT
