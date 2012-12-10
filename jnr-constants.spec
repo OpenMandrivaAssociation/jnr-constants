@@ -46,3 +46,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/constantine.jar
 
+
+
+%changelog
+* Sun Nov 27 2011 Guilherme Moro <guilherme@mandriva.com> 0.7-5
++ Revision: 734053
+- rebuild
+- imported package jnr-constants
+
