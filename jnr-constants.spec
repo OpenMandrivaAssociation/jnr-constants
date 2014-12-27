@@ -4,9 +4,9 @@
 
 Name:           jnr-constants
 Version:        0.8.4
-Release:        3.0%{?dist}
+Release:        6.1
 Summary:        Java Native Runtime constants 
-
+Group:		Development/Java
 License:        ASL 2.0
 URL:            http://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
@@ -20,7 +20,7 @@ BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  maven-surefire-provider-junit
 
 Requires:       java
 Requires:       jpackage-utils
@@ -42,7 +42,7 @@ find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
@@ -59,11 +59,8 @@ install -pm 644 pom.xml  \
 
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
 %{_javadir}/constantine.jar
 
 %files javadoc
