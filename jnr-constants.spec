@@ -4,7 +4,7 @@
 
 Name:           jnr-constants
 Version:        0.8.4
-Release:        6.1
+Release:        6.2
 Summary:        Java Native Runtime constants 
 Group:		Development/Java
 License:        ASL 2.0
