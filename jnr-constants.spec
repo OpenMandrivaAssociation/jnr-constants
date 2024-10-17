@@ -8,7 +8,7 @@ Release:        6.4
 Summary:        Java Native Runtime constants 
 Group:		Development/Java
 License:        ASL 2.0
-URL:            http://github.com/jnr/%{name}/
+URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
 BuildArch:      noarch
 
