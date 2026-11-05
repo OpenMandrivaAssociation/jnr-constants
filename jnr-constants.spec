@@ -20,19 +20,45 @@ Platform and POSIX constants used by the jnr libraries.
 
 %prep
 %setup -q -n jnr-constants-jnr-constants-%{version}
-# jnr-parent configures surefire with a JDK toolchain. No toolchain is installed,
-# and that check runs even when tests are skipped.
+# A versionless jar plugin is removed, and the bundle plugin's manifest is
+# not produced. jnr-parent's surefire toolchain runs even when tests are skipped.
 python - <<'PY'
+import re
 from pathlib import Path
 path = Path("pom.xml")
 text = path.read_text()
-plugin = """      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration combine.self="override"/>
-      </plugin>
-"""
-marker = "</plugins>"
-text = text[:text.rfind(marker)] + plugin + text[text.rfind(marker):]
+text = re.sub(
+	r"\s*<plugin>\s*<groupId>org\.apache\.felix</groupId>\s*<artifactId>maven-bundle-plugin</artifactId>.*?</plugin>",
+	"",
+	text,
+	count=1,
+	flags=re.S,
+)
+text = re.sub(
+	r"\s*<manifestFile>.*?</manifestFile>",
+	"",
+	text,
+	count=1,
+	flags=re.S,
+)
+text = text.replace(
+	"<artifactId>maven-jar-plugin</artifactId>",
+	"<artifactId>maven-jar-plugin</artifactId>\n        <version>3.3.0</version>",
+	1,
+)
+text = text.replace(
+	"<build>",
+	"""<build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration combine.self="override"/>
+        </plugin>
+      </plugins>
+    </pluginManagement>""",
+	1,
+)
 path.write_text(text)
 PY
 
